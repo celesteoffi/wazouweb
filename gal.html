@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galerie d'Images</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Popup de vérification d'âge -->
+  <div id="age-verification" class="popup">
+    <h1>Vérification d'âge</h1>
+    <p>Ce site peut contenir des images pouvant heurter la sensibilité. Vous devez être majeur pour accéder au contenu.</p>
+    <div>
+      <button id="yes-button" class="kawaii-button">Oui, je suis majeur</button>
+      <button id="no-button" class="kawaii-button">Non, retourner à l'accueil</button>
+    </div>
+  </div>
+
+  <!-- Contenu principal -->
+  <header>
+    <h1>Galerie d'Images</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Accueil</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="section-box">
+    <h2>Découvrez nos images</h2>
+    <p id="loading-text">Chargement des images en cours...</p>
+    <div id="images" class="gallery"></div>
+  </div>
+
+  <footer>
+    &copy; 2024 Website Wazou - Tous droits réservés
+  </footer>
+
+  <script>
+    // Vérification d'âge
+    const ageVerificationPopup = document.getElementById('age-verification');
+    const yesButton = document.getElementById('yes-button');
+    const noButton = document.getElementById('no-button');
+    const loadingText = document.getElementById('loading-text');
+
+    // Si l'utilisateur clique sur "Oui"
+    yesButton.addEventListener('click', () => {
+      ageVerificationPopup.style.display = 'none'; // Cache la popup
+      fetchAndDisplayImages(); // Charge les images après validation
+    });
+
+    // Si l'utilisateur clique sur "Non"
+    noButton.addEventListener('click', () => {
+      window.location.href = 'index.html'; // Redirige vers index.html
+    });
+
+    // API pour charger les images
+    const API_URL = 'https://galapi.wazou.fr/api/images';
+
+    async function fetchAndDisplayImages() {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error(`Erreur API : ${response.status}`);
+
+        const data = await response.json();
+        const imagesContainer = document.getElementById('images');
+        imagesContainer.innerHTML = ''; // Efface le message de chargement
+
+        if (!data.images || data.images.length === 0) {
+          imagesContainer.innerHTML = '<p>Aucune image trouvée.</p>';
+          return;
+        }
+
+        // Supprime le texte "Chargement des images en cours..."
+        if (loadingText) loadingText.remove();
+
+        // Parcourt les images retournées par l'API
+        data.images.forEach((base64Image) => {
+          const img = document.createElement('img');
+          img.src = base64Image; // URL base64
+          img.alt = 'Image';
+          img.classList.add('gallery-img');
+          imagesContainer.appendChild(img);
+        });
+      } catch (err) {
+        document.getElementById('images').innerHTML = 'Erreur lors du chargement des images.';
+        console.error('Erreur API :', err);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wazou</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>✍️ Wazou 🌸</h1>
+    <nav>
+      <ul>
+        <li><a href="/cgu.html">CGU</a></li>
+        <li><a href="/privacy.html">Privacy</a></li>
+		<li><a href="/gal.html">Bot ia Galery</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="about" class="section-box">
+      <h2>À Propos</h2>
+      <p>Bienvenue dans notre univers où tout est doux et adorable ! 🐾</p>
+      <img src="https://websitewazou.fr/image0-removebg-preview.png" alt="Chat Kawaii" class="kawaii-img">
+    </section>
+
+    <section id="examples" class="section-box">
+      <h2>🌸 Plus d'information 🌸</h2>
+      <ul>
+        <li>Bonjour 🌼 ! Je suis un texte mignon ~✨</li>
+        <li>Adoptez le style rond et pastel ! 🍡</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Wazou. Tous droits réservés. 🍥</p>
+  </footer>
+
+  <script>
+    const button = document.querySelector('.kawaii-button');
+    const output = document.getElementById('output');
+    const editor = document.getElementById('text-editor');
+
+    button.addEventListener('click', () => {
+      const text = editor.value;
+      if (text.trim()) {
+        output.innerHTML = `✨ ${text} 🌸`;
+      } else {
+        output.innerHTML = "💖 Écrivez quelque chose de kawaii ! 💕";
+      }
+    });
+  </script>
+</body>
+</html>
